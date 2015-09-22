@@ -7,4 +7,9 @@ class Crawls::Manager
     Crawls::Robots::Zusaar.execute
     Crawls::Robots::Connpass.execute
   end
+
+  # rails runner Crawls::Manager.init
+  def self.init
+    Event.create_index
+  end
 end

@@ -4,11 +4,16 @@ module Api
 
       def index
         events = []
+        events = Event.all if params[:keyword].blank?
+
         if params[:keyword].present?
-          keyword = "%#{escape_like(params[:keyword])}%"
-          events = Event.where('title like ? or catchtext like ? or description like ?', keyword, keyword, keyword)
-        else
-          events = Event.all
+          keyword = params[:keyword]
+          begin
+            events = Event.show_index(keyword)
+            events = find_by_keyword(keyword) if events.length == 0
+          rescue
+            events = find_by_keyword(keyword)
+          end
         end
 
         response_events = []
@@ -84,6 +89,12 @@ module Api
             @keyword = keyword
           end
           attr_accessor :length, :oldest, :newest, :keyword
+        end
+
+        def find_by_keyword(keyword)
+          keyword = "%#{escape_like(keyword)}%"
+          search_query = 'title like ? or catchtext like ? or description like ? or adress like ? or place like ?'
+          @events = Event.where(search_query, keyword, keyword, keyword, keyword, keyword)
         end
 
         def escape_like(string)
