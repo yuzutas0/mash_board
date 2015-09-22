@@ -6,7 +6,7 @@ module Api
         keyword = params[:keyword] if params[:keyword].present?
         events = Event.all # todo: search by keyword
 
-        length = events.length
+        response_events = []
         oldest = nil
         newest = nil
 
@@ -18,15 +18,26 @@ module Api
         end
 
         for event in events
+          next if event.started_at.blank?
+          next if Time.zone.now.next_year < event.started_at
+
+          next if event.started_at_day_of_the_week.blank?
+          next if event.started_at_hour.blank?
+
+          next if days[event.started_at_day_of_the_week].blank?
+          next if days[event.started_at_day_of_the_week][event.started_at_hour].blank?
+
           oldest = event.started_at if oldest.blank? || event.started_at < oldest
           newest = event.started_at if newest.blank? || newest < event.started_at
-          if event.started_at_day_of_the_week.present? && event.started_at_hour.present?
-            temp_count = days[event.started_at_day_of_the_week][event.started_at_hour].to_i
-            temp_count += 1
-            days[event.started_at_day_of_the_week][event.started_at_hour] = temp_count.to_s
-          end
+
+          temp_count = days[event.started_at_day_of_the_week][event.started_at_hour].to_i
+          temp_count += 1
+          days[event.started_at_day_of_the_week][event.started_at_hour] = temp_count.to_s
+
+          response_events << event
         end
 
+        length = response_events.length
         oldest = oldest.strftime("%Y-%m-%d") if oldest.present?
         newest = newest.strftime("%Y-%m-%d") if newest.present?
         information = Information.new(length, oldest, newest, keyword)
