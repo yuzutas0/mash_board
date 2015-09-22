@@ -19,7 +19,7 @@ class Crawls::Converter
                                       :lat => new_event.lat,
                                       :lon => new_event.lon,
                                       :source_updated_at => new_event.source_updated_at,
-                                      :stared_at_day_of_the_week => new_event.stared_at_day_of_the_week,
+                                      :started_at_day_of_the_week => new_event.started_at_day_of_the_week,
                                       :started_at_hour => new_event.started_at_hour
                                   })
     rescue => e
@@ -80,7 +80,7 @@ class Crawls::Converter
     event.source_updated_at = source_array['updated_at']
 
     if event.started_at.present?
-      event.stared_at_day_of_the_week = event.started_at.strftime("%a")
+      event.started_at_day_of_the_week = event.started_at.strftime("%a")
       event.started_at_hour = event.started_at.strftime("%H")
     end
 
