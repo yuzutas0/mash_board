@@ -14,7 +14,7 @@ class CreateEvents < ActiveRecord::Migration
       t.string :lat
       t.string :lon
       t.datetime :source_updated_at, null: false
-      t.string :stared_at_day_of_the_week
+      t.string :started_at_day_of_the_week
       t.integer :started_at_hour
 
       t.timestamps null: false
