@@ -2,9 +2,14 @@ module Api
   module V1
     class EventsController < ApplicationController
 
-      def show
-        keyword = params[:keyword] if params[:keyword].present?
-        events = Event.all # todo: search by keyword
+      def index
+        events = []
+        if params[:keyword].present?
+          keyword = "%#{escape_like(params[:keyword])}%"
+          events = Event.where('title like ? or catchtext like ? or description like ?', keyword, keyword, keyword)
+        else
+          events = Event.all
+        end
 
         response_events = []
         oldest = nil
@@ -63,6 +68,10 @@ module Api
             @keyword = keyword
           end
           attr_accessor :length, :oldest, :newest, :keyword
+        end
+
+        def escape_like(string)
+          string.gsub(/[\\%_]/){|m| "\\#{m}"}
         end
 
     end
