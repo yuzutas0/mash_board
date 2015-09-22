@@ -16,7 +16,8 @@ module Api
         newest = nil
 
         days = Hash.new { |hash, key| hash[key] = Hash.new(&hash.default_proc) }
-        ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].each do |day|
+        week_array = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+        week_array.each do |day|
           for number in 0..23
             hash = days[day][number] = "0"
           end
@@ -46,6 +47,21 @@ module Api
         oldest = oldest.strftime("%Y-%m-%d") if oldest.present?
         newest = newest.strftime("%Y-%m-%d") if newest.present?
         information = Information.new(length, oldest, newest, keyword)
+
+        top_array = []
+        week_array.each do |day|
+          days[day].each do |key, value|
+            top_array << value
+          end
+        end
+        top_array.sort!
+        array_length = top_array.length
+
+        week_array.each do |day|
+          days[day].each do |key, value|
+            days[day][key] = top_array.index(value) * 100 / array_length
+          end
+        end
 
         response = Response.new(information, days)
         render json: response
