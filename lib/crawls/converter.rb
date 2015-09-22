@@ -49,16 +49,16 @@ class Crawls::Converter
       event.detail_url = source_array['public_url']
     end
 
-    if [1, 3, 4].include?(source_id)
-      event.started_at = source_array['started_at']
-    elsif source_id == 2
-      event.started_at = source_array['starts_at']
+    if [1, 3, 4].include?(source_id) && source_array['started_at'].present?
+      event.started_at = source_array['started_at'].in_time_zone
+    elsif source_id == 2 && source_array['starts_at'].present?
+      event.started_at = source_array['starts_at'].in_time_zone
     end
 
-    if [1, 3, 4].include?(source_id)
-      event.ended_at = source_array['ended_at']
-    elsif source_id == 2
-      event.ended_at = source_array['ends_at']
+    if [1, 3, 4].include?(source_id) && source_array['ended_at'].present?
+      event.ended_at = source_array['ended_at'].in_time_zone
+    elsif source_id == 2 && source_array['ends_at'].present?
+      event.ended_at = source_array['ends_at'].in_time_zone
     end
 
     event.adress = source_array['address']
