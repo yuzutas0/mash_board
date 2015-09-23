@@ -40,72 +40,58 @@ var EventBox = React.createClass({
       tableContent = tableContent + "<tr><td>" + i.toString() + "</td>"
       for (var day in this.state.data['days']) {
         var color = "";
-        if(this.state.data['days'][day][i] >= 90){
-          color = "red";
+        if(this.state.data['days'][day][i] >= 95){
+          color = "x-large-score";
+        } else if (this.state.data['days'][day][i] >= 90) {
+          color = "large-score";
         } else if (this.state.data['days'][day][i] >= 80) {
-          color = "red-orange";
-        } else if (this.state.data['days'][day][i] >= 70) {
-          color = "orange";
-        } else if (this.state.data['days'][day][i] >= 60) {
-          color = "orange-yellow";
+          color = "middle-score";
+        } else if (this.state.data['days'][day][i] >= 65) {
+          color = "small-score";
         } else if (this.state.data['days'][day][i] >= 50) {
-          color = "yellow";
+          color = "x-small-score";
         } else {
-          color = "white";
+          color = "none-score";
         }
-        tableContent = tableContent + "<td class='" + color + "'>.</td>";
+        tableContent = tableContent + "<td class='clearText tableLine " + color + "'>.</td>";
       }
-      tableContent = tableContent + "</tr>"
+      tableContent = tableContent + "<td class='clearText'>.</td></tr>"
     }
-    tableContent = tableContent + "<tr><td>.</td>"
+    tableContent = tableContent + "<tr><td class='clearText'>.</td>"
     for (var day in this.state.data['days']) {
       tableContent = tableContent + "<td>" + day + "</td>"
     }
-    tableContent = tableContent + "</tr>";
+    tableContent = tableContent + "<td class='clearText'>.</td></tr>";
     return(
-      <div className="eventBox">
-        <header>
-          <h1><i className="fa fa-bar-chart"></i>MashSearch</h1>
-        </header>
-        <div id="container">
-          <div className="descriptionBox">
-            <h2>Visualizing Statistical Data About Events</h2>
+      <div id="wrap">
+        <div className="eventBox">
+          <header>
+            <h1><i className="fa fa-bar-chart"></i>MashSearch</h1>
+          </header>
+          <div id="container">
+            <div id="descriptionBox">
+              <h2>Visualizing Statistical Data About Events</h2>
+              <p>from ATND, Doorkeeper, Zusaar, Connpass</p>
+            </div>
+            <div className="formBox">
+              <EventForm onEventSubmit={this.handleEventSubmit} />
+              <EventResetForm onEventSubmit={this.handleEventSubmit} />
+            </div>
+            <div id="menuBox">
+              <p>Events: {this.state.data['information']['length']}</p>
+              <p>From: {this.state.data['information']['oldest']} , To: {this.state.data['information']['newest']}</p>
+              <p>Keyword: {this.state.data['information']['keyword']}</p>
+            </div>
+            <div id="statisticBox">
+              <table>
+                <tbody dangerouslySetInnerHTML={{__html: tableContent}} />
+              </table>
+            </div>
           </div>
-          <div className="formBox">
-            <EventForm onEventSubmit={this.handleEventSubmit} />
-            <EventResetForm onEventSubmit={this.handleEventSubmit} />
-          </div>
-          <div id="menuBox">
-            <p>Events: {this.state.data['information']['length']}</p>
-            <p>From: {this.state.data['information']['oldest']} , To: {this.state.data['information']['newest']}</p>
-            <p>Keyword: {this.state.data['information']['keyword']}</p>
-            <p>{this.state.data['days']['Sun']['1']}</p>
-          </div>
-          <div id="statisticBox">
-            <table>
-              <tbody dangerouslySetInnerHTML={{__html: tableContent}} />
-            </table>
-          </div>
-          <EventList data={this.state.data} />
+          <footer>
+            <p>presented by <a href='http://twitter.com/yuzutas0'>@yuzutas0</a></p>
+          </footer>
         </div>
-      </div>
-    );
-  }
-});
-
-var EventList = React.createClass({
-  render: function() {
-    var eventNodes = null;
-    /**var eventNodes = this.props.data.map(function (event) {
-      return (
-        <Event author={event.author}>
-          {event.text}
-        </Event>
-      );
-    });*/
-    return(
-      <div className="eventList">
-        {eventNodes}
       </div>
     );
   }
@@ -141,19 +127,6 @@ var EventResetForm = React.createClass({
       <form className="eventResetForm" onSubmit={this.handleSubmit}>
         <input type="submit" className="btn" value="Reset" />
       </form>
-    );
-  }
-});
-
-var Event = React.createClass({
-  render: function() {
-    return(
-      <div className="event">
-        <h2 className="eventAuthor">
-          {this.props.author}
-        </h2>
-        {this.props.children}
-      </div>
     );
   }
 });
