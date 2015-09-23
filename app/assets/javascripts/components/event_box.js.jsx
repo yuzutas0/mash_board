@@ -1,8 +1,5 @@
 var EventBox = React.createClass({
-  getInitialState: function() {
-    return {data: []};
-  },
-  componentDidMount: function() {
+  loadEventsFromServer: function() {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -13,6 +10,12 @@ var EventBox = React.createClass({
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
+  },
+  getInitialState: function() {
+    return {data: []};
+  },
+  componentDidMount: function() {
+    this.loadEventsFromServer();
   },
   render: function() {
     return(
