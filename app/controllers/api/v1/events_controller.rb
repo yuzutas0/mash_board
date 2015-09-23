@@ -68,12 +68,20 @@ module Api
           end
         end
 
-        response = Response.new(information, days)
+        data = Data.new(information, days)
+        response = Response.new(data)
         render json: response
       end
 
       private
         class Response
+          def initialize(data)
+            @data = data
+          end
+          attr_accessor :data
+        end
+
+        class Data
           def initialize(information, days)
             @information = information
             @days = days
