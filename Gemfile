@@ -39,6 +39,8 @@ gem 'whenever', '0.9.4', :require => false
 gem 'elasticsearch-rails', '0.1.7'
 gem 'elasticsearch-model', '0.1.7'
 gem 'react-rails', '1.3.1'
+gem 'bootstrap-sass', '3.3.5.1'
+gem "font-awesome-rails", '4.4.0.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

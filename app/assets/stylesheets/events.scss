@@ -1,3 +1,75 @@
 // Place all the styles related to the events controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+body {
+  margin: 0;
+  padding: 0;
+  color: #cccccc;
+  background-color: #444444;
+}
+
+header {
+  height: auto;
+  padding: 10px;
+  background-color: #222222;
+}
+
+h1 {
+  color: #eeeeee;
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0;
+}
+
+h1 i {
+  margin-right: 5px;
+}
+
+#container {
+  margin: 15px;
+}
+
+h2 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: normal;
+  text-align: center;
+}
+
+.formBox {
+  width: auto;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.formBox form {
+  display: -moz-inline-box;
+  display: inline-block;
+}
+
+.formBox form input {
+  width: auto;
+  font-size: 10px;
+  margin: 2px;
+}
+
+.form-control {
+  display: -moz-inline-box;
+  display: inline-block;
+}
+
+#menuBox {
+  margin: 15px;
+  padding: 10px;
+  background-color: #303030;
+  border-radius: 6px 12px;
+}
+
+p {
+  margin: auto;
+  font-size: 12px;
+}

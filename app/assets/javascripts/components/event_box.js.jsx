@@ -24,9 +24,24 @@ var EventBox = React.createClass({
   render: function() {
     return(
       <div className="eventBox">
-        <h1>Events</h1>
-        <EventList data={this.state.data} />
-        <EventForm onEventSubmit={this.handleEventSubmit} />
+        <header>
+          <h1><i className="fa fa-bar-chart"></i>MashSearch</h1>
+        </header>
+        <div id="container">
+          <div className="descriptionBox">
+            <h2>Visualizing Statistical Data About Events</h2>
+          </div>
+          <div className="formBox">
+            <EventForm onEventSubmit={this.handleEventSubmit} />
+            <EventResetForm onEventSubmit={this.handleEventSubmit} />
+          </div>
+          <div id="menuBox">
+            <p>Events: 1000</p>
+            <p>From: 2015-07-01 , To: 2015-09-01</p>
+            <p>Keyword: rails</p>
+          </div>
+          <EventList data={this.state.data} />
+        </div>
       </div>
     );
   }
@@ -61,8 +76,23 @@ var EventForm = React.createClass({
   render: function() {
     return(
       <form className="eventForm" onSubmit={this.handleSubmit}>
-        <input type="text" placeholder="Keyword" ref="keyword" />
-        <input type="submit" value="Search" />
+        <input type="text" placeholder="Keyword" className="form-control" ref="keyword" />
+        <input type="submit" className="btn" value="Search" />
+      </form>
+    );
+  }
+});
+
+var EventResetForm = React.createClass({
+  handleSubmit: function(e) {
+    e.preventDefault();
+    this.props.onEventSubmit("");
+    return;
+  },
+  render: function() {
+    return(
+      <form className="eventResetForm" onSubmit={this.handleSubmit}>
+        <input type="submit" className="btn" value="Reset" />
       </form>
     );
   }
