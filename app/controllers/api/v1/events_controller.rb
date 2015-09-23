@@ -4,9 +4,9 @@ module Api
 
       def index
         data = { data: [
-            { author: "Author1", text: "This is one" },
-            { author: "Author2", text: "This is two" }
-          ]}
+          { author: 'Author1', text: 'This is one comment' },
+          { author: 'author2', text: 'This is two comment' }
+        ]}
         render json: data
       end
 
