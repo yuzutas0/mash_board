@@ -3,7 +3,7 @@ var EventBox = React.createClass({
     return(
       <div className="eventBox">
         <h1>Events</h1>
-        <EventList />
+        <EventList data={this.props.data} />
         <EventForm />
       </div>
     );
@@ -12,11 +12,16 @@ var EventBox = React.createClass({
 
 var EventList = React.createClass({
   render: function() {
+    var eventNodes = this.props.data.map(function (event) {
+      return (
+        <Event author={event.author}>
+          {event.text}
+        </Event>
+      );
+    });
     return(
       <div className="eventList">
-        I am a EventList!
-        <Event author="Foobar1">This is one</Event>
-        <Event author="Foobar2">This is two</Event>
+        {eventNodes}
       </div>
     );
   }
