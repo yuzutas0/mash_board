@@ -14,13 +14,11 @@ var EventBox = React.createClass({
   getInitialState: function() {
     return {
       data: {
-        information: {
-          length:0, oldest:0000-00-00, newest:0000-00-00, keyword: ""
-        },
+        information: [],
         days: {
           Sun: [],
           Mon: [],
-          The: [],
+          Tue: [],
           Wed: [],
           Thu: [],
           Fri: [],
@@ -37,6 +35,33 @@ var EventBox = React.createClass({
     this.loadEventsFromServer(url);
   },
   render: function() {
+    var tableContent = ""
+    for (var i = 0; i < 24; i++) {
+      tableContent = tableContent + "<tr><td>" + i.toString() + "</td>"
+      for (var day in this.state.data['days']) {
+        var color = "";
+        if(this.state.data['days'][day][i] >= 90){
+          color = "red";
+        } else if (this.state.data['days'][day][i] >= 80) {
+          color = "red-orange";
+        } else if (this.state.data['days'][day][i] >= 70) {
+          color = "orange";
+        } else if (this.state.data['days'][day][i] >= 60) {
+          color = "orange-yellow";
+        } else if (this.state.data['days'][day][i] >= 50) {
+          color = "yellow";
+        } else {
+          color = "white";
+        }
+        tableContent = tableContent + "<td class='" + color + "'>.</td>";
+      }
+      tableContent = tableContent + "</tr>"
+    }
+    tableContent = tableContent + "<tr><td>.</td>"
+    for (var day in this.state.data['days']) {
+      tableContent = tableContent + "<td>" + day + "</td>"
+    }
+    tableContent = tableContent + "</tr>";
     return(
       <div className="eventBox">
         <header>
@@ -54,7 +79,12 @@ var EventBox = React.createClass({
             <p>Events: {this.state.data['information']['length']}</p>
             <p>From: {this.state.data['information']['oldest']} , To: {this.state.data['information']['newest']}</p>
             <p>Keyword: {this.state.data['information']['keyword']}</p>
-            /**<p>{this.state.data['days']['Sun']['1']}</p>*/
+            <p>{this.state.data['days']['Sun']['1']}</p>
+          </div>
+          <div id="statisticBox">
+            <table>
+              <tbody dangerouslySetInnerHTML={{__html: tableContent}} />
+            </table>
           </div>
           <EventList data={this.state.data} />
         </div>
