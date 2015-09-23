@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  root 'events#index'
+
   namespace :api, format: 'json' do
     namespace :v1 do
       get 'events(/:keyword)' => 'events#index'
