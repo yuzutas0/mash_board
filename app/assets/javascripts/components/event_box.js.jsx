@@ -1,7 +1,7 @@
 var EventBox = React.createClass({
-  loadEventsFromServer: function() {
+  loadEventsFromServer: function(url) {
     $.ajax({
-      url: this.props.url,
+      url: url,
       dataType: 'json',
       success: function(result) {
         this.setState({data: result.data});
@@ -15,14 +15,18 @@ var EventBox = React.createClass({
     return {data: []};
   },
   componentDidMount: function() {
-    this.loadEventsFromServer();
+    this.loadEventsFromServer(this.props.url);
+  },
+  handleEventSubmit: function(keyword) {
+    var url = this.props.url + '/' + keyword;
+    this.loadEventsFromServer(url);
   },
   render: function() {
     return(
       <div className="eventBox">
         <h1>Events</h1>
         <EventList data={this.state.data} />
-        <EventForm />
+        <EventForm onEventSubmit={this.handleEventSubmit} />
       </div>
     );
   }
@@ -46,11 +50,20 @@ var EventList = React.createClass({
 });
 
 var EventForm = React.createClass({
+  handleSubmit: function(e) {
+    e.preventDefault();
+    var keyword = React.findDOMNode(this.refs.keyword).value.trim();
+    if(!keyword){return;}
+    this.props.onEventSubmit(keyword);
+    React.findDOMNode(this.refs.keyword).value = '';
+    return;
+  },
   render: function() {
     return(
-      <div className="eventForm">
-        I am a EventForm!
-      </div>
+      <form className="eventForm" onSubmit={this.handleSubmit}>
+        <input type="text" placeholder="Keyword" ref="keyword" />
+        <input type="submit" value="Search" />
+      </form>
     );
   }
 });
