@@ -1,9 +1,12 @@
 var EventBox = React.createClass({
+  getInitialState: function() {
+    return {data: []};
+  },
   render: function() {
     return(
       <div className="eventBox">
         <h1>Events</h1>
-        <EventList data={this.props.data} />
+        <EventList data={this.state.data} />
         <EventForm />
       </div>
     );
