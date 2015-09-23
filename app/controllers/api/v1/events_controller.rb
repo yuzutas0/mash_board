@@ -3,14 +3,6 @@ module Api
     class EventsController < ApplicationController
 
       def index
-        data = { data: [
-          { author: 'Author1', text: 'This is one comment' },
-          { author: 'author2', text: 'This is two comment' }
-        ]}
-        render json: data
-      end
-
-      def index_temp
         events = []
         events = Event.all if params[:keyword].blank?
 

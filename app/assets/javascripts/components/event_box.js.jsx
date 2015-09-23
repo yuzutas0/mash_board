@@ -12,7 +12,22 @@ var EventBox = React.createClass({
     });
   },
   getInitialState: function() {
-    return {data: []};
+    return {
+      data: {
+        information: {
+          length:0, oldest:0000-00-00, newest:0000-00-00, keyword: ""
+        },
+        days: {
+          Sun: [],
+          Mon: [],
+          The: [],
+          Wed: [],
+          Thu: [],
+          Fri: [],
+          Sat: []
+        }
+      }
+    };
   },
   componentDidMount: function() {
     this.loadEventsFromServer(this.props.url);
@@ -36,9 +51,10 @@ var EventBox = React.createClass({
             <EventResetForm onEventSubmit={this.handleEventSubmit} />
           </div>
           <div id="menuBox">
-            <p>Events: 1000</p>
-            <p>From: 2015-07-01 , To: 2015-09-01</p>
-            <p>Keyword: rails</p>
+            <p>Events: {this.state.data['information']['length']}</p>
+            <p>From: {this.state.data['information']['oldest']} , To: {this.state.data['information']['newest']}</p>
+            <p>Keyword: {this.state.data['information']['keyword']}</p>
+            /**<p>{this.state.data['days']['Sun']['1']}</p>*/
           </div>
           <EventList data={this.state.data} />
         </div>
@@ -49,13 +65,14 @@ var EventBox = React.createClass({
 
 var EventList = React.createClass({
   render: function() {
-    var eventNodes = this.props.data.map(function (event) {
+    var eventNodes = null;
+    /**var eventNodes = this.props.data.map(function (event) {
       return (
         <Event author={event.author}>
           {event.text}
         </Event>
       );
-    });
+    });*/
     return(
       <div className="eventList">
         {eventNodes}
