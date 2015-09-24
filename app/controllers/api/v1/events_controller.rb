@@ -11,7 +11,8 @@ module Api
           begin
             events = Event.show_index(keyword)
             events = find_by_keyword(keyword) if events.length == 0
-          rescue
+          rescue => e
+            puts e.message
             events = find_by_keyword(keyword)
           end
         end

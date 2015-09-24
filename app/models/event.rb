@@ -9,6 +9,6 @@ class Event < ActiveRecord::Base
 	end
 
   def self.show_index(query)
-    response = self.search(query).records
+    response = self.search(query, size: Event.count).records
   end
 end
