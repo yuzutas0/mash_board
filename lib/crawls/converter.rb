@@ -5,23 +5,23 @@ class Crawls::Converter
   def self.update_event(old_event, new_event)
     begin
       old_event.update_attributes!({
-                                      :source_id => new_event.source_id,
-                                      :source_event_id => new_event.source_event_id,
-                                      :title => new_event.title,
-                                      :catchtext => new_event.catchtext,
-                                      :description => new_event.description,
-                                      :detail_url => new_event.detail_url,
-                                      :started_at => new_event.started_at,
-                                      :ended_at => new_event.ended_at,
-                                      :reference_url => new_event.reference_url,
-                                      :adress => new_event.adress,
-                                      :place => new_event.place,
-                                      :lat => new_event.lat,
-                                      :lon => new_event.lon,
-                                      :source_updated_at => new_event.source_updated_at,
-                                      :started_at_day_of_the_week => new_event.started_at_day_of_the_week,
-                                      :started_at_hour => new_event.started_at_hour
-                                  })
+                                       :source_id => new_event.source_id,
+                                       :source_event_id => new_event.source_event_id,
+                                       :title => new_event.title,
+                                       :catchtext => new_event.catchtext,
+                                       :description => new_event.description,
+                                       :detail_url => new_event.detail_url,
+                                       :started_at => new_event.started_at,
+                                       :ended_at => new_event.ended_at,
+                                       :reference_url => new_event.reference_url,
+                                       :adress => new_event.adress,
+                                       :place => new_event.place,
+                                       :lat => new_event.lat,
+                                       :lon => new_event.lon,
+                                       :source_updated_at => new_event.source_updated_at,
+                                       :started_at_day_of_the_week => new_event.started_at_day_of_the_week,
+                                       :started_at_hour => new_event.started_at_hour
+                                   })
     rescue => e
       puts e.message
     end
@@ -88,7 +88,6 @@ class Crawls::Converter
   end
 
 end
-
 
 
 # --------------------------------------------------------------------
